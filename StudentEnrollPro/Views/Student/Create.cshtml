@@ -1,0 +1,82 @@
+﻿@model StudentEnrollPro.Models.StudentCourse
+
+@{
+    ViewData["Title"] = "AddStudent";
+}
+<style>
+    .form-group {
+        margin-top: 25px;
+    }
+</style>
+<div class="container mt-4">
+    <h1 class="display-4">Add Student</h1>
+    <hr />
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label">First Name</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label">Last Name</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="EnrollDate" class="control-label">Enrollment Date</label>
+                    <input asp-for="EnrollDate" class="form-control" type="date" />
+                    <span asp-validation-for="EnrollDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EmailAddress" class="control-label">Email Address</label>
+                    <input asp-for="EmailAddress" class="form-control" />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CourseName" class="control-label">Course Name</label>
+                    <input asp-for="CourseName" class="form-control" />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CourseFee" class="control-label">Course Fee</label>
+                    <input asp-for="CourseFee" class="form-control" />
+                    <span asp-validation-for="CourseFee" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Check for TempData error message and display a popup
+        var errorMessage = '@TempData["ErrorMessage"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    </script>
+}

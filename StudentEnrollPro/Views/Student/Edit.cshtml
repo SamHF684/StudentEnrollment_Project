@@ -1,0 +1,145 @@
+﻿@model StudentEnrollPro.Models.StudentCourse
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<style>
+    .form-group {
+        margin-top: 25px;
+    }
+</style>
+<div class="container mt-4">
+    <h4 class="display-4">Edit Student</h4>
+    <hr />
+    
+   <form asp-action="Edit" method="post">
+       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+       <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="EnrollDate" class="control-label"></label>
+                    <input asp-for="EnrollDate" class="form-control" />
+                    <span asp-validation-for="EnrollDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmailAddress" class="control-label"></label>
+                    <input asp-for="EmailAddress" class="form-control" />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CourseName" class="control-label"></label>
+                    <input asp-for="CourseName" class="form-control" />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CourseFee" class="control-label"></label>
+                    <input asp-for="CourseFee" class="form-control" />
+                    <span asp-validation-for="CourseFee" class="text-danger"></span>
+                </div>
+            </div>
+       </div>
+       <div class="row mt-3">
+            <div class="form-group text-right">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+                <!-- Add button to open the Add Course popup -->
+                <button type="button" class="btn btn-primary" id="addCourseButton" data-toggle="modal" data-target="#addCourseModal">Add Course</button>
+
+            </div>
+       </div>
+   </form>
+</div>
+
+<!-- Add Course Modal -->
+<div class="modal" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="addCourseModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCourseModalLabel">Add Course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Add a partial view or form for adding a new course -->
+                <div id="addCourseForm"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            // Handle click event for Add Course button
+            $("#addCourseButton").click(function () {
+                // Make an AJAX request to get the Add Course form
+                // $.get("/Course/GetAddCourseForm", function (data) {
+                //     // Display the Add Course form in the modal
+                //     $("#addCourseForm").html(data);
+                // });
+
+                $("#addCourseModal").show();
+                
+            });
+            $(".close").click(function () {
+                $("#addCourseModal").hide();
+            });
+
+            // Handle form submission for Add Course
+            $(document).on("submit", "#addCourseForm form", function (e) {
+                e.preventDefault();
+                // Make an AJAX request to handle the form submission
+                $.ajax({
+                    url: "/Course/AddCourse",
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        // Update the courses table using AJAX (you need to implement this part)
+                        updateCoursesTable();
+                        // Close the Add Course modal
+                        $("#addCourseModal").modal("hide");
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+        function updateCoursesTable() {
+            // Implement this function to update the courses table using AJAX
+            // You may need to make another AJAX request to get the updated courses and refresh the table
+        }
+
+    </script>
+}
+
+
+
+
+
+
+
